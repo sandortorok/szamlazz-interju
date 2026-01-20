@@ -1,0 +1,46 @@
+<wrapper title="Új nyugta létrehozása">
+  <form [formGroup]="receiptForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Alapadatok komponens -->
+    <app-receipt-basic-info 
+      [formGroup]="receiptForm"
+      [paymentMethods]="paymentMethods"
+      [currencies]="currencies">
+    </app-receipt-basic-info>
+
+    <!-- Tételek -->
+    <h3>Tételek</h3>
+    <div formArrayName="items">
+      <app-receipt-item 
+        *ngFor="let item of items.controls; let i = index"
+        [itemGroup]="getItemFormGroup(i)"
+        [index]="i"
+        [canDelete]="items.length > 1"
+        [vatRates]="vatRates"
+        [calculatedTotals]="calculateItemTotals(i)"
+        (remove)="removeItem(i)">
+      </app-receipt-item>
+    </div>
+
+    <button mat-raised-button type="button" color="accent" (click)="addItem()" class="add-item-btn">
+      <mat-icon>add</mat-icon>
+      Új tétel hozzáadása
+    </button>
+
+    <!-- Végösszeg -->
+    <div class="grand-total">
+      <h3>Fizetendő bruttó végösszeg: {{ getGrossSum() | number:'1.0-0' }} Ft</h3>
+    </div>
+
+    <!-- Mentés gomb -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="receiptForm.invalid">
+        <mat-icon>save</mat-icon>
+        Nyugta létrehozása
+      </button>
+      <button mat-raised-button type="button" routerLink="/">
+        Mégse
+      </button>
+    </div>
+  </form>
+</wrapper>

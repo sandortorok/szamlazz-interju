@@ -1,0 +1,33 @@
+.totals-card {
+  margin-bottom: 20px;
+}
+
+.totals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.total-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.total-item.grand-total {
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #000;
+  padding-top: 12px;
+}
+
+.total-item .label {
+  color: #666;
+}
+
+.total-item.grand-total .label,
+.total-item.grand-total .value {
+  color: #000;
+}

@@ -1,0 +1,11 @@
+{
+  "/api/szamlazz": {
+    "target": "https://www.szamlazz.hu",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/szamlazz": "/szamla"
+    }
+  }
+}
+  

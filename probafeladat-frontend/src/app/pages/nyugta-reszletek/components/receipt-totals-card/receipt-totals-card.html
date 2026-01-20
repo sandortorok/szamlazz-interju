@@ -1,0 +1,21 @@
+<mat-card class="totals-card">
+  <mat-card-header>
+    <mat-card-title>Összesítés</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="totals-grid">
+      <div class="total-item">
+        <span class="label">Nettó összesen:</span>
+        <span class="value">{{ totalNet | currencyFormatter }}</span>
+      </div>
+      <div class="total-item">
+        <span class="label">ÁFA összesen:</span>
+        <span class="value">{{ totalVat | currencyFormatter }}</span>
+      </div>
+      <div class="total-item grand-total">
+        <span class="label">Bruttó összesen:</span>
+        <span class="value">{{ totalGross | currencyFormatter }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

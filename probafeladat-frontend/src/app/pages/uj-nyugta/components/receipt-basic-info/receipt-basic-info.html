@@ -1,0 +1,59 @@
+<div [formGroup]="formGroup">
+  <h3>Alapadatok</h3>
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Előtag</mat-label>
+      <input matInput formControlName="prefix" required />
+      @if (formGroup.get('prefix')?.hasError('required')) {
+        <mat-error>
+          Az előtag megadása kötelező.
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Fizetési mód</mat-label>
+      <mat-select formControlName="paymentMethod" required>
+        @for (method of paymentMethods; track method) {
+          <mat-option [value]="method">
+            {{ method }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (formGroup.get('paymentMethod')?.hasError('required')) {
+        <mat-error>
+          A fizetési mód megadása kötelező.
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>Pénznem</mat-label>
+      <mat-select formControlName="currency" required>
+        @for (curr of currencies; track curr) {
+          <mat-option [value]="curr">
+            {{ curr }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (formGroup.get('currency')?.hasError('required')) {
+        <mat-error>
+          A pénznem megadása kötelező.
+        </mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Megjegyzés</mat-label>
+      <textarea matInput formControlName="comment" rows="2"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-checkbox formControlName="pdfDownload">
+      PDF számla készítés
+    </mat-checkbox>
+  </div>
+</div>

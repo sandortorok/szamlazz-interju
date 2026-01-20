@@ -1,0 +1,31 @@
+<wrapper [title]="'Nyugta részletei: ' + (receipt()?.receiptNumber || '')">
+  @if (receipt(); as receipt) {
+    <div class="receipt-details">
+      @if (receipt.receiptPdf) {
+        <div class="pdf-actions">
+          <button mat-raised-button color="primary" (click)="downloadPdf(receipt.receiptPdf, receipt.receiptNumber)">
+            <mat-icon>download</mat-icon>
+            Nyugta letöltése PDF-ben
+          </button>
+        </div>
+      }
+      
+      <app-receipt-info-card
+        [receipt]="receipt"
+      ></app-receipt-info-card>
+
+      <app-receipt-items-card
+        [items]="receipt.items"
+        [columns]="itemColumns"
+      ></app-receipt-items-card>
+
+      <app-receipt-totals-card
+        [totalNet]="receipt.totalNet"
+        [totalVat]="receipt.totalVat"
+        [totalGross]="receipt.totalGross"
+      ></app-receipt-totals-card>
+    </div>
+  } @else {
+    <div class="loading">Betöltés...</div>
+  }
+</wrapper>

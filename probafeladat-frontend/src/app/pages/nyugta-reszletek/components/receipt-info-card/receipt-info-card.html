@@ -1,0 +1,31 @@
+<mat-card class="info-card">
+  <mat-card-header>
+    <mat-card-title>Alapadatok</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">Nyugtaszám:</span>
+        <span class="value">{{ receipt.receiptNumber }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Keltezés:</span>
+        <span class="value">{{ receipt.date | dateFormatter }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Fizetési mód:</span>
+        <span class="value">{{ receipt.paymentMethod }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Pénznem:</span>
+        <span class="value">{{ receipt.currency }}</span>
+      </div>
+      @if (receipt.comment) {
+        <div class="info-item full-width">
+          <span class="label">Megjegyzés:</span>
+          <span class="value">{{ receipt.comment }}</span>
+        </div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

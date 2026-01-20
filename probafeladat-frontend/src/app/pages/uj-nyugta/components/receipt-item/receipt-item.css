@@ -1,0 +1,48 @@
+mat-card {
+  margin-bottom: 1rem;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.item-header h4 {
+  margin: 0;
+  color: #333;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-field {
+  flex: 1;
+  min-width: 150px;
+}
+
+.form-field-large {
+  flex: 2;
+  min-width: 250px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.calculated-values {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.calculated-values p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}

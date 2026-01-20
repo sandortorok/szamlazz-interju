@@ -1,0 +1,11 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-toolbar a {
+  margin-left: 0.5rem;
+}
+
+mat-icon {
+  margin-right: 0.25rem;
+}
