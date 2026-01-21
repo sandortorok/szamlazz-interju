@@ -41,3 +41,18 @@ Az összes API végpont dokumentációja interaktívan elérhető a Swagger UI-b
 
 ![Adatbázis Séma](./readme-images/db-structure.png)
 
+## Alkalmazás Felület
+
+### Nyugták Listázása
+
+![Nyugták Listája](./readme-images/frontend-nyugta-lista.png)
+
+### Új Nyugta Létrehozása
+
+![Új Nyugta](./readme-images/frontend-uj-nyugta.png)
+
+### Nyugta Részletek
+
+![Nyugta Részletek](./readme-images/frontend-nyugta-reszletek.png)
+
+
