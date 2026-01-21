@@ -25,13 +25,6 @@ services:
     build:
       context: ./probafeladat-backend
       dockerfile: Dockerfile
-      args:
-        DB_HOST: mysql
-        DB_PORT: 3306
-        DB_NAME: ${MYSQL_DATABASE}
-        DB_USERNAME: ${MYSQL_USER}
-        DB_PASSWORD: ${MYSQL_PASSWORD}
-        SZAMLAZZ_API_KEY: ${SZAMLAZZ_API_KEY}
     container_name: szamlazz-backend
     restart: unless-stopped
     environment:
@@ -41,7 +34,6 @@ services:
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
       SZAMLAZZ_API_KEY: ${SZAMLAZZ_API_KEY}
-      SZAMLAZZ_API_URL: ${SZAMLAZZ_API_URL}
     ports:
       - "${SERVER_PORT:-8080}:${SERVER_PORT:-8080}"
     depends_on:
@@ -61,7 +53,7 @@ services:
       context: ./probafeladat-frontend
       dockerfile: Dockerfile
       args:
-        API_URL: ${API_URL:-http://localhost:8080}
+        API_URL: http://localhost:${SERVER_PORT:-8081}
         SZAMLAZZ_API_KEY: ${SZAMLAZZ_API_KEY}
     container_name: szamlazz-frontend
     restart: unless-stopped

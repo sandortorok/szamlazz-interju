@@ -13,15 +13,11 @@ COPY . .
 
 # Build arguments for environment
 ARG API_URL=http://localhost:8081
-ARG SZAMLAZZ_API_KEY=your_api_key_here
+ARG SZAMLAZZ_API_KEY=
 
-# Create environment.ts from example if it doesn't exist
-RUN if [ ! -f "src/environments/environment.ts" ]; then \
-      cp src/environments/environment.example.ts src/environments/environment.ts; \
-    fi
-
-# Replace placeholders in environment files with build args
-RUN sed -i "s|__API_URL__|${API_URL}|g" src/environments/environment.ts && \
+# Generate environment.ts from template
+RUN cp src/environments/environment.template.ts src/environments/environment.ts && \
+    sed -i "s|__API_URL__|${API_URL}|g" src/environments/environment.ts && \
     sed -i "s|__SZAMLAZZ_API_KEY__|${SZAMLAZZ_API_KEY}|g" src/environments/environment.ts
 
 # Build the application
