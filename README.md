@@ -28,3 +28,16 @@ Spring Boot + Angular alkalmazás nyugták létrehozására és kezelésére a S
    - Frontend: http://localhost:4200
    - Backend API: http://localhost:8080
    - Swagger UI: http://localhost:8080/swagger-ui.html
+
+## API Dokumentáció
+
+### Swagger UI
+
+Az összes API végpont dokumentációja interaktívan elérhető a Swagger UI-ban.
+
+![Swagger API Endpoints](./readme-images/swagger.png)
+
+## Adatbázis Szerkezete
+
+![Adatbázis Séma](./readme-images/db-structure.png)
+
