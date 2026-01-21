@@ -31,6 +31,33 @@ Spring Boot + Angular alkalmazás nyugták létrehozására és kezelésére a S
 
 ## API Dokumentáció
 
+### Számlázz.hu Integráció Folyamata
+
+```mermaid
+sequenceDiagram
+    participant F as Frontend
+    participant B as Backend
+    participant S as Számlázz.hu API
+    participant DB as MySQL
+
+    F->>B: POST /api/receipts (JSON)
+    
+    Note over B: ReceiptRequest → XML<br/>(JAXB marshalling)
+    
+    B->>S: POST multipart/form-data<br/>(action-xmlnyugtacreate.xml)
+    
+    S-->>B: XML válasz<br/>(xmlnyugtavalasz)
+    
+    Note over B: XML → ReceiptResponse<br/>(JAXB unmarshalling)
+    
+    alt Sikeres válasz
+        B->>DB: Nyugta mentése
+        B-->>F: 200 OK + ReceiptResponse
+    else Hiba a Számlázz.hu-tól
+        B-->>F: 502 Bad Gateway + ErrorResponse
+    end
+```
+
 ### Swagger UI
 
 Az összes API végpont dokumentációja interaktívan elérhető a Swagger UI-ban.
