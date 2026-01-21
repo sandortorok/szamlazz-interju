@@ -44,10 +44,3 @@ docker compose down
 # Teljes törlés (adatbázissal együtt)
 docker compose down -v
 ```
-
-## API Végpontok
-
-- `POST /api/receipts` - Új nyugta létrehozása
-- `GET /api/receipts` - Összes nyugta listázása
-- `GET /api/receipts/{id}` - Nyugta részletei
-- `GET /api/receipts/test` - Teszt nyugta (minta XML-ből)
