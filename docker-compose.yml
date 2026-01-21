@@ -12,6 +12,7 @@ services:
       - "${MYSQL_PORT:-3307}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
       - szamlazz-network
     healthcheck:
