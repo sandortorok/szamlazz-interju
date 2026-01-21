@@ -13,7 +13,6 @@ public class ReceiptEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Response fields
     private boolean success;
     private Integer errorCode;
     private String errorMessage;
@@ -22,7 +21,6 @@ public class ReceiptEntity {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String receiptPdf;  // nyugtaPdf - Base64 encoded PDF
 
-    // Base fields
     private Integer receiptId;
     private String callId;
     private String receiptNumber;
@@ -38,7 +36,6 @@ public class ReceiptEntity {
     private String ledgerCustomer;
     private boolean test;
 
-    // Totals
     private Double totalNet;
     private Double totalVat;
     private Double totalGross;
@@ -56,7 +53,6 @@ public class ReceiptEntity {
     private List<VatRateSummaryEntity> vatRateSummaries = new ArrayList<>();
 
     
-    // Getters and setters
     public Long getId() {
         return id;
     }

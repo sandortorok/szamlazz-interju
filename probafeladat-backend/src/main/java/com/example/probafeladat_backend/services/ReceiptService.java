@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SzamlazzService {
+public class ReceiptService {
 
     private static final String BASE_URL = "https://www.szamlazz.hu/szamla/";
     private static final String FILE_NAME = "action-szamla_agent_nyugta_create";
@@ -35,7 +35,7 @@ public class SzamlazzService {
     private final ReceiptMapper receiptMapper;
     private final ReceiptRepository receiptRepository;
 
-    public SzamlazzService(WebClient webClient, ReceiptMapper receiptMapper, ReceiptRepository receiptRepository) throws JAXBException {
+    public ReceiptService(WebClient webClient, ReceiptMapper receiptMapper, ReceiptRepository receiptRepository) throws JAXBException {
         this.webClient = webClient;
         this.receiptMapper = receiptMapper;
         this.receiptRepository = receiptRepository;
@@ -69,7 +69,6 @@ public class SzamlazzService {
 
         ReceiptResponse response = parseResponse(xmlResponse);
         
-        // Csak sikeres választ mentünk adatbázisba
         if (response.isSuccess()) {
             saveReceiptToDatabase(response);
         }
@@ -82,18 +81,13 @@ public class SzamlazzService {
         return (ReceiptResponse) unmarshaller.unmarshal(new StringReader(xmlResponse));
     }
 
-    // Mentés az adatbázisba
     private void saveReceiptToDatabase(ReceiptResponse response) {
         if (response != null) {
-            ReceiptEntity entity = receiptMapper.toEntity(response);
+            ReceiptEntity entity = receiptMapper.responseToEntity(response);
             receiptRepository.save(entity);
         }
     }
 
-    /**
-     * Lekérdezi az összes nyugtát összefoglaló formában.
-     * Csak a legfontosabb mezőket tartalmazza: id, nyugtaszám, dátum, nettó és bruttó összeg.
-     */
     @Transactional(readOnly = true)
     public List<ReceiptSummaryDto> getAllReceipts() {
         return receiptRepository.findAll().stream()

@@ -1,4 +1,3 @@
-// Backend entitás megfelelője - részletes nyugta nézet
 export interface ReceiptEntity {
   // Response fields
   id: number;
@@ -34,7 +33,6 @@ export interface ReceiptEntity {
   vatRateSummaries: VatRateSummaryEntity[];
 }
 
-// Nyugta tétel entitás
 export interface ReceiptItemEntity {
   id: number;
   itemId?: string;
@@ -49,7 +47,6 @@ export interface ReceiptItemEntity {
   grossTotal: number;
 }
 
-// Fizetés entitás
 export interface PaymentEntity {
   id: number;
   paymentTool: string;
@@ -57,7 +54,6 @@ export interface PaymentEntity {
   description?: string;
 }
 
-// ÁFA kulcs összesítés entitás
 export interface VatRateSummaryEntity {
   id: number;
   vatType?: string;

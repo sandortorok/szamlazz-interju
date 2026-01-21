@@ -14,14 +14,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReceiptMapper {
 
-    public ReceiptEntity toEntity(ReceiptResponse response) {
+    public ReceiptEntity responseToEntity(ReceiptResponse response) {
         if (response == null) {
             return null;
         }
 
         ReceiptEntity entity = new ReceiptEntity();
 
-        // Response fields
         entity.setSuccess(response.isSuccess());
         entity.setErrorCode(response.getErrorCode());
         entity.setErrorMessage(response.getErrorMessage());
@@ -29,7 +28,6 @@ public class ReceiptMapper {
 
         Receipt receipt = response.getReceipt();
         if (receipt != null) {
-            // Base fields
             if (receipt.getBase() != null) {
                 entity.setReceiptId(receipt.getBase().getId());
                 entity.setCallId(receipt.getBase().getCallId());
@@ -47,28 +45,24 @@ public class ReceiptMapper {
                 entity.setTest(receipt.getBase().isTest());
             }
 
-            // Totals
             if (receipt.getTotals() != null && receipt.getTotals().getTotalSum() != null) {
                 entity.setTotalNet(receipt.getTotals().getTotalSum().getNetTotal());
                 entity.setTotalVat(receipt.getTotals().getTotalSum().getVatTotal());
                 entity.setTotalGross(receipt.getTotals().getTotalSum().getGrossTotal());
             }
 
-            // VAT rate summaries
             if (receipt.getTotals() != null && receipt.getTotals().getVatRateSummaries() != null) {
                 for (VatRateSummary vatSummary : receipt.getTotals().getVatRateSummaries()) {
                     entity.addVatRateSummary(toVatRateSummaryEntity(vatSummary));
                 }
             }
 
-            // Items
             if (receipt.getItems() != null && receipt.getItems().getItems() != null) {
                 for (ResponseItem item : receipt.getItems().getItems()) {
                     entity.addItem(toItemEntity(item));
                 }
             }
 
-            // Payments
             if (receipt.getPayments() != null && receipt.getPayments().getPayments() != null) {
                 for (ResponsePayment payment : receipt.getPayments().getPayments()) {
                     entity.addPayment(toPaymentEntity(payment));

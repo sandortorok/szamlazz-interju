@@ -3,10 +3,6 @@ package com.example.probafeladat_backend.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-/**
- * Entity az ÁFA kulcsok szerinti összesítésekhez (afakulcsossz).
- * Minden nyugtához tartozhat több összesítés különböző ÁFA kulcsok szerint.
- */
 @Entity
 @Table(name = "vat_rate_summaries")
 public class VatRateSummaryEntity {
@@ -20,13 +16,12 @@ public class VatRateSummaryEntity {
     @JsonBackReference("receipt-vat-summaries")
     private ReceiptEntity receipt;
 
-    private String vatType;      // afatipus (TAM, AAM, EU, etc.)
-    private Double vatRate;      // afakulcs (0, 5, 10, 27, etc.)
-    private Double netTotal;     // netto
-    private Double vatAmount;    // afa
-    private Double grossTotal;   // brutto
+    private String vatType;
+    private Double vatRate;
+    private Double netTotal;
+    private Double vatAmount;
+    private Double grossTotal;
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

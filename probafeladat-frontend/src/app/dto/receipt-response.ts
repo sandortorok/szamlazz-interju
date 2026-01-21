@@ -1,4 +1,3 @@
-// Lista megjelenítéshez használt összefoglaló
 export interface ReceiptSummaryDto {
   id: number;
   receiptNumber: string;
@@ -16,7 +15,6 @@ export interface ReceiptResponse {
   receipt?: Receipt;
 }
 
-// Nyugta teljes adatai
 export interface Receipt {
   base: Base;
   items: ResponseItems;
@@ -24,7 +22,6 @@ export interface Receipt {
   totals: Totals;
 }
 
-// Alapadatok
 export interface Base {
   id: number;
   callId?: string;
@@ -42,12 +39,10 @@ export interface Base {
   test: boolean;
 }
 
-// Tételek wrapper
 export interface ResponseItems {
   items: ResponseItem[];
 }
 
-// Tétel
 export interface ResponseItem {
   name: string;
   itemId?: string;
@@ -62,32 +57,27 @@ export interface ResponseItem {
   ledger?: ResponseItemLedger;
 }
 
-// Tétel főkönyvi adatok (ha van)
 export interface ResponseItemLedger {
   accountNumber?: string;
   costCenter?: string;
   project?: string;
 }
 
-// Kifizetések wrapper
 export interface ResponsePayments {
   payments: ResponsePayment[];
 }
 
-// Kifizetés
 export interface ResponsePayment {
   paymentTool: string;
   amount: number;
   description?: string;
 }
 
-// Összegek
 export interface Totals {
   vatRateSummaries: VatRateSummary[];
   totalSum: TotalSum;
 }
 
-// ÁFA kulcs szerinti összesítés
 export interface VatRateSummary {
   vatType?: string;
   vatRate: number;
@@ -96,7 +86,6 @@ export interface VatRateSummary {
   grossTotal: number;
 }
 
-// Teljes összesítés
 export interface TotalSum {
   netTotal: number;
   vatTotal: number;

@@ -86,7 +86,6 @@ export class NyugtaReszletek implements OnInit {
 
   downloadPdf(base64Pdf: string, receiptNumber: string): void {
     try {
-      // Base64 string konvertálása byte array-é
       const byteCharacters = atob(base64Pdf);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -94,17 +93,14 @@ export class NyugtaReszletek implements OnInit {
       }
       const byteArray = new Uint8Array(byteNumbers);
       
-      // Blob létrehozása
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       
-      // Letöltés trigger
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = `${receiptNumber}.pdf`;
       link.click();
       
-      // Cleanup
       window.URL.revokeObjectURL(url);
     } catch (error) {
       alert('Hiba történt a PDF letöltése során!');

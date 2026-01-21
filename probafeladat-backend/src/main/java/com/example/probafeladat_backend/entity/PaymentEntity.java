@@ -20,7 +20,6 @@ public class PaymentEntity {
     private Double amount;
     private String description;
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

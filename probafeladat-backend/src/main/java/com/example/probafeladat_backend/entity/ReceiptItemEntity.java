@@ -27,7 +27,6 @@ public class ReceiptItemEntity {
     private Double vatAmount;
     private Double grossTotal;
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

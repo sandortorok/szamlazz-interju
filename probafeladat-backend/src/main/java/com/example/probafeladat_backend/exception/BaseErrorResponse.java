@@ -29,7 +29,6 @@ public abstract class BaseErrorResponse {
         this.path = path;
     }
 
-    // Getters and Setters
     public int getStatus() {
         return status;
     }

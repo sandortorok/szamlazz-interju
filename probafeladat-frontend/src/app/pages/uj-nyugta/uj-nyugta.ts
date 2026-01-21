@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpService } from '../../services/http-service';
 import { ReceiptRequest, Item } from '../../dto/receipt-request';
 import { ReceiptResponse } from '../../dto/receipt-response';
-import { VAT_RATES, PAYMENT_METHODS, CURRENCIES, DEFAULT_VALUES } from '../../utils/constants';
+import { VAT_RATES, PAYMENT_METHODS, CURRENCIES, DEFAULT_VALUES } from '../../constants/constants';
 import { Wrapper } from '../../shared/wrapper/wrapper';
 import { ReceiptBasicInfo } from './components/receipt-basic-info/receipt-basic-info';
 import { ReceiptItem } from './components/receipt-item/receipt-item';
