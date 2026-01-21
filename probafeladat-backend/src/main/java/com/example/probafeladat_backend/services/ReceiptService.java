@@ -1,12 +1,16 @@
 package com.example.probafeladat_backend.services;
 
+import com.example.probafeladat_backend.dto.request.ReceiptRequest;
 import com.example.probafeladat_backend.dto.response.ReceiptResponse;
 import com.example.probafeladat_backend.dto.response.ReceiptSummaryDto;
 import com.example.probafeladat_backend.entity.ReceiptEntity;
+import com.example.probafeladat_backend.exception.ExternalApiException;
+import com.example.probafeladat_backend.exception.ReceiptNotFoundException;
 import com.example.probafeladat_backend.mapper.ReceiptMapper;
 import com.example.probafeladat_backend.repository.ReceiptRepository;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,10 +24,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReceiptService {
@@ -35,7 +38,8 @@ public class ReceiptService {
     private String apiKey;
 
     private final WebClient webClient;
-    private final JAXBContext jaxbContext;
+    private final JAXBContext requestJaxbContext;
+    private final JAXBContext responseJaxbContext;
     private final ReceiptMapper receiptMapper;
     private final ReceiptRepository receiptRepository;
 
@@ -43,7 +47,8 @@ public class ReceiptService {
         this.webClient = webClient;
         this.receiptMapper = receiptMapper;
         this.receiptRepository = receiptRepository;
-        this.jaxbContext = JAXBContext.newInstance(ReceiptResponse.class);
+        this.requestJaxbContext = JAXBContext.newInstance(ReceiptRequest.class);
+        this.responseJaxbContext = JAXBContext.newInstance(ReceiptResponse.class);
     }
 
     @Transactional
@@ -51,11 +56,25 @@ public class ReceiptService {
         ClassPathResource resource = new ClassPathResource("samples/receipt-sample.xml");
         String xmlContent = resource.getContentAsString(StandardCharsets.UTF_8);
         xmlContent = xmlContent.replace("{{SZAMLAZZ_API_KEY}}", apiKey);
-        return createReceipt(xmlContent);
+        return sendToSzamlazz(xmlContent);
     }
 
     @Transactional
-    public ReceiptResponse createReceipt(String xmlContent) throws JAXBException {
+    public ReceiptResponse createReceipt(ReceiptRequest request) throws JAXBException {
+        String xmlContent = marshalRequest(request);
+        return sendToSzamlazz(xmlContent);
+    }
+
+    private String marshalRequest(ReceiptRequest request) throws JAXBException {
+        StringWriter writer = new StringWriter();
+        Marshaller marshaller = requestJaxbContext.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+        marshaller.marshal(request, writer);
+        return writer.toString();
+    }
+
+    private ReceiptResponse sendToSzamlazz(String xmlContent) throws JAXBException {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part(FILE_NAME, new ByteArrayResource(xmlContent.getBytes()) {
             @Override
@@ -74,23 +93,22 @@ public class ReceiptService {
 
         ReceiptResponse response = parseResponse(xmlResponse);
         
-        if (response.isSuccess()) {
-            saveReceiptToDatabase(response);
+        if (!response.isSuccess()) {
+            throw new ExternalApiException(response.getErrorMessage(), String.valueOf(response.getErrorCode()));
         }
         
+        saveReceiptToDatabase(response);
         return response;
     }
 
     private ReceiptResponse parseResponse(String xmlResponse) throws JAXBException {
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        Unmarshaller unmarshaller = responseJaxbContext.createUnmarshaller();
         return (ReceiptResponse) unmarshaller.unmarshal(new StringReader(xmlResponse));
     }
 
     private void saveReceiptToDatabase(ReceiptResponse response) {
-        if (response != null) {
-            ReceiptEntity entity = receiptMapper.responseToEntity(response);
-            receiptRepository.save(entity);
-        }
+        ReceiptEntity entity = receiptMapper.responseToEntity(response);
+        receiptRepository.save(entity);
     }
 
     @Transactional(readOnly = true)
@@ -103,11 +121,12 @@ public class ReceiptService {
                         entity.getTotalNet(),
                         entity.getTotalGross()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional(readOnly = true)
-    public Optional<ReceiptEntity> getReceiptById(Long id) {
-        return receiptRepository.findById(id);
+    public ReceiptEntity getReceiptById(Long id) {
+        return receiptRepository.findById(id)
+                .orElseThrow(() -> new ReceiptNotFoundException(id));
     }
 }

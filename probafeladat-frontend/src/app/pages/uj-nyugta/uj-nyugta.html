@@ -11,15 +11,16 @@
     <!-- Tételek -->
     <h3>Tételek</h3>
     <div formArrayName="items">
-      <app-receipt-item 
-        *ngFor="let item of items.controls; let i = index"
-        [itemGroup]="getItemFormGroup(i)"
-        [index]="i"
-        [canDelete]="items.length > 1"
-        [vatRates]="vatRates"
-        [calculatedTotals]="calculateItemTotals(i)"
-        (remove)="removeItem(i)">
-      </app-receipt-item>
+      @for (item of items.controls; track item; let i = $index) {
+        <app-receipt-item 
+          [itemGroup]="getItemFormGroup(i)"
+          [index]="i"
+          [canDelete]="items.length > 1"
+          [vatRates]="vatRates"
+          [calculatedTotals]="calculateItemTotals(i)"
+          (remove)="removeItem(i)">
+        </app-receipt-item>
+      }
     </div>
 
     <button mat-raised-button type="button" color="accent" (click)="addItem()" class="add-item-btn">

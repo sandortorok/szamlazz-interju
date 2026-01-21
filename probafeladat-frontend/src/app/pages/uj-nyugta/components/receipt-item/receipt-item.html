@@ -58,9 +58,11 @@
       <mat-form-field appearance="fill" class="form-field">
         <mat-label>ÁFA kulcs (%)</mat-label>
         <mat-select formControlName="vatRate" required>
-          <mat-option *ngFor="let rate of vatRates" [value]="rate">
-            {{ rate }}%
-          </mat-option>
+          @for (rate of vatRates; track rate) {
+            <mat-option [value]="rate">
+              {{ rate }}%
+            </mat-option>
+          }
         </mat-select>
         @if (itemGroup.get('vatRate')?.hasError('required')) {
           <mat-error>
