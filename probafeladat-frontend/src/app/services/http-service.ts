@@ -4,13 +4,14 @@ import { Observable } from 'rxjs';
 import { ReceiptRequest } from '../dto/receipt-request';
 import { ReceiptSummaryDto, ReceiptResponse } from '../dto/receipt-response';
 import { ReceiptEntity } from '../dto/receipt-db-entity';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/receipts';
+  private readonly apiUrl = `${environment.apiUrl}/api/receipts`;
 
 
   testReceiptFromSample(): Observable<ReceiptResponse> {

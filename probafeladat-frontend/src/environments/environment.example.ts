@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
+  apiUrl: '__API_URL__',
   szamlazzCredentials: {
-    apiKey: 'your_api_key_here',
+    apiKey: '__SZAMLAZZ_API_KEY__',
   },
 };

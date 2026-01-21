@@ -11,7 +11,60 @@ Spring Boot + Angular alkalmazás nyugták létrehozására és kezelésére a S
 **Frontend:**
 - Angular 21
 
-## Telepítés és Futtatás
+## Quick Start with Docker
+
+### Előfeltételek
+- Docker
+- Docker Compose
+
+### Indítás
+
+1. **Repository klónozása**
+```bash
+git clone https://github.com/sandortorok/szamlazz-interju.git
+cd szamlazz-interju
+```
+
+2. **.env fájl létrehozása**
+```bash
+cp .env.example .env
+```
+
+3. **.env fájl szerkesztése** - állítsd be a Számlázz.hu API kulcsot:
+```env
+SZAMLAZZ_API_KEY=ide_jon_a_valodi_api_kulcs
+```
+
+4. **Alkalmazás indítása**
+```bash
+docker-compose up -d
+```
+
+5. **Elérés**
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:8080
+- Swagger UI: http://localhost:8080/swagger-ui.html
+
+### Docker parancsok
+
+```bash
+# Összes service indítása
+docker-compose up -d
+
+# Logok megtekintése
+docker-compose logs -f
+
+# Service-ek leállítása
+docker-compose down
+
+# Újraépítés és újraindítás
+docker-compose up -d --build
+
+# Leállítás és adatbázis törlése (tiszta újrakezdés)
+docker-compose down -v
+```
+
+## Manuális telepítés (Docker nélkül)
 
 ### Backend
 
