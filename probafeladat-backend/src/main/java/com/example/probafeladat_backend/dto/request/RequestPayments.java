@@ -1,5 +1,6 @@
 package com.example.probafeladat_backend.dto.request;
 
+import jakarta.validation.Valid;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -9,6 +10,7 @@ import java.util.List;
 public class RequestPayments {
 
     @XmlElement(name = "kifizetes", required = true)
+    @Valid
     private List<RequestPayment> payments;
 
     public List<RequestPayment> getPayments() {

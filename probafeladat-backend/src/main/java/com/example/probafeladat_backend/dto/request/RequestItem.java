@@ -69,11 +69,11 @@ public class RequestItem {
     private RequestItemLedger ledger;
 
     @XmlElement(name = "megjegyzes")
-    @Schema(description = "Tétel megjegyzés (opcionális)", example = "")
+    @Schema(description = "Tétel megjegyzés (opcionális)")
     private String comment;
 
     @XmlElement(name = "torloKod")
-    @Schema(description = "Törlő kód (opcionális)", example = "0")
+    @Schema(description = "Törlő kód (opcionális)")
     private Integer deleteCode;
 
     public String getName() {

@@ -12,7 +12,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 public class Header {
 
     @XmlElement(name = "hivasAzonosito")
-    @Schema(description = "Egyedi hívás azonosító (opcionális)", example = "CALL-12345")
+    @Schema(description = "Egyedi hívás azonosító (opcionális)")
     private String callId;
 
     @XmlElement(name = "elotag", required = true)
@@ -32,11 +32,11 @@ public class Header {
 
     @XmlElement(name = "devizaarf")
     @Positive(message = "Árfolyam pozitív szám kell legyen")
-    @Schema(description = "Deviza árfolyam (opcionális)", example = "380.5")
+    @Schema(description = "Deviza árfolyam (opcionális)")
     private Double exchangeRate;
 
     @XmlElement(name = "devizabank")
-    @Schema(description = "Deviza bank neve (opcionális)", example = "MNB")
+    @Schema(description = "Deviza bank neve (opcionális)")
     private String exchangeBank;
 
     @XmlElement(name = "megjegyzes")
@@ -44,11 +44,11 @@ public class Header {
     private String comment;
 
     @XmlElement(name = "pdfSablon")
-    @Schema(description = "PDF sablon neve (opcionális)", example = "")
+    @Schema(description = "PDF sablon neve (opcionális)")
     private String pdfTemplate;
 
     @XmlElement(name = "fokonyvVevo")
-    @Schema(description = "Főkönyvi vevő (opcionális)", example = "")
+    @Schema(description = "Főkönyvi vevő (opcionális)")
     private String ledgerCustomer;
 
     public String getCallId() {

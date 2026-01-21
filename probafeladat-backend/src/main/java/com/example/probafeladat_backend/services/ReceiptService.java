@@ -8,6 +8,7 @@ import com.example.probafeladat_backend.repository.ReceiptRepository;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -30,6 +31,9 @@ public class ReceiptService {
     private static final String BASE_URL = "https://www.szamlazz.hu/szamla/";
     private static final String FILE_NAME = "action-szamla_agent_nyugta_create";
 
+    @Value("${szamlazz.api.key}")
+    private String apiKey;
+
     private final WebClient webClient;
     private final JAXBContext jaxbContext;
     private final ReceiptMapper receiptMapper;
@@ -46,6 +50,7 @@ public class ReceiptService {
     public ReceiptResponse testWithSample() throws IOException, JAXBException {
         ClassPathResource resource = new ClassPathResource("samples/receipt-sample.xml");
         String xmlContent = resource.getContentAsString(StandardCharsets.UTF_8);
+        xmlContent = xmlContent.replace("{{SZAMLAZZ_API_KEY}}", apiKey);
         return createReceipt(xmlContent);
     }
 

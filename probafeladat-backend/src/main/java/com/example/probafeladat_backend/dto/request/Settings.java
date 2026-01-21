@@ -11,16 +11,16 @@ import jakarta.xml.bind.annotation.XmlElement;
 public class Settings {
 
     @XmlElement(name = "felhasznalo")
-    @Schema(description = "Felhasználónév (opcionális, ha API kulcs van)", example = "myuser")
+    @Schema(description = "Felhasználónév (opcionális)")
     private String username;
 
     @XmlElement(name = "jelszo")
-    @Schema(description = "Jelszó (opcionális, ha API kulcs van)", example = "mypassword")
+    @Schema(description = "Jelszó (opcionális)")
     private String password;
 
     @XmlElement(name = "szamlaagentkulcs")
     @Schema(description = "Számlázz.hu API kulcs (username/password vagy ez szükséges)", 
-            example = "your api key here")
+            example = "your_api_key_here")
     private String apiKey;
 
     @XmlElement(name = "pdfLetoltes", required = true)

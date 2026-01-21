@@ -49,8 +49,9 @@ COPY --from=build /app/target/*.jar app.jar
 # Copy the .env file from build stage
 COPY --from=build /app/.env .env
 
-# Expose port
-EXPOSE 8080
+# Expose port (default 8080, override with SERVER_PORT env var)
+ARG SERVER_PORT=8080
+EXPOSE ${SERVER_PORT}
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

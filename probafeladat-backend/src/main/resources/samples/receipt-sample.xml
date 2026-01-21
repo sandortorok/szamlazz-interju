@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmlnyugtacreate xmlns="http://www.szamlazz.hu/xmlnyugtacreate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.szamlazz.hu/szamla/docs/xsds/nyugtacreate/xmlnyugtacreate.xsd">
   <beallitasok>                                                      <!-- REQ         -->
-    <szamlaagentkulcs>97039xbwy2gws4iv7yn4xk8cniuird56tyamat6gy3</szamlaagentkulcs>
-    <pdfLetoltes>true</pdfLetoltes>                       <!-- REQ boolean --> <!-- PDF download -->
+    <szamlaagentkulcs>{{SZAMLAZZ_API_KEY}}</szamlaagentkulcs>
+    <pdfLetoltes>false</pdfLetoltes>                       <!-- REQ boolean --> <!-- PDF download -->
   </beallitasok>
   <fejlec>                                                <!-- REQ         -->
     <hivasAzonosito></hivasAzonosito>     <!--     string  --> <!-- unique identifier of the call, duplication must be avoided-->

@@ -1,5 +1,6 @@
 package com.example.probafeladat_backend.controller;
 
+import com.example.probafeladat_backend.constants.SwaggerExamples;
 import com.example.probafeladat_backend.dto.request.ReceiptRequest;
 import com.example.probafeladat_backend.dto.response.ReceiptResponse;
 import com.example.probafeladat_backend.dto.response.ReceiptSummaryDto;
@@ -40,14 +41,37 @@ public class ReceiptController {
     }
 
     @PostMapping
-    @Operation(summary = "Új nyugta létrehozása", description = "Új nyugta létrehozása a Számlázz.hu API-n keresztül. A nyugta adatai mentésre kerülnek a saját adatbázisban is.")
+    @Operation(
+        summary = "Új nyugta létrehozása",
+        description = "Új nyugta létrehozása a Számlázz.hu API-n keresztül. A nyugta adatai mentésre kerülnek a saját adatbázisban is."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Nyugta sikeresen létrehozva", content = @Content(schema = @Schema(implementation = ReceiptResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validációs hiba", content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Számlázz.hu API hiba", content = @Content(schema = @Schema(implementation = ExternalApiErrorResponse.class)))
+        @ApiResponse(responseCode = "200", description = "Nyugta sikeresen létrehozva",
+            content = @Content(
+                schema = @Schema(implementation = ReceiptResponse.class),
+                examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                    name = "Sikeres válasz",
+                    value = SwaggerExamples.RECEIPT_RESPONSE_SUCCESS
+                )
+            )),
+        @ApiResponse(responseCode = "422", description = "Validációs hiba",
+            content = @Content(schema = @Schema(implementation = ValidationErrorResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Számlázz.hu API hiba",
+            content = @Content(schema = @Schema(implementation = ExternalApiErrorResponse.class)))
     })
     public ResponseEntity<?> createReceipt(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Nyugta adatai", required = true, content = @Content(schema = @Schema(implementation = ReceiptRequest.class))) @Valid @RequestBody ReceiptRequest request) {
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                description = "Nyugta adatai",
+                required = true,
+                content = @Content(
+                    schema = @Schema(implementation = ReceiptRequest.class),
+                    examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                        name = "Minimális példa",
+                        value = SwaggerExamples.RECEIPT_REQUEST_MINIMAL
+                    )
+                )
+            )
+            @Valid @RequestBody ReceiptRequest request) {
         try {
             StringWriter writer = new StringWriter();
             Marshaller marshaller = jaxbContext.createMarshaller();
@@ -77,9 +101,16 @@ public class ReceiptController {
     }
 
     @GetMapping("/test")
-    @Operation(summary = "Teszt nyugta létrehozása", description = "Teszt nyugta létrehozása a resources/samples/receipt-sample.xml minta alapján")
+    @Operation(summary = "Teszt nyugta létrehozása", description = "Teszt nyugta létrehozása a https://docs.szamlazz.hu/hu/agent/generating_receipt/xml minta alapján")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Teszt nyugta sikeresen létrehozva", content = @Content(schema = @Schema(implementation = ReceiptResponse.class)))
+            @ApiResponse(responseCode = "200", description = "Teszt nyugta sikeresen létrehozva",
+                content = @Content(
+                    schema = @Schema(implementation = ReceiptResponse.class),
+                    examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                        name = "Teszt válasz",
+                        value = SwaggerExamples.RECEIPT_RESPONSE_SUCCESS
+                    )
+                ))
     })
     public ResponseEntity<ReceiptResponse> testReceipt() throws IOException, JAXBException {
         ReceiptResponse response = receiptService.testWithSample();
@@ -99,7 +130,14 @@ public class ReceiptController {
     @GetMapping("/{id}")
     @Operation(summary = "Nyugta részletes adatai", description = "Egy nyugta teljes adatainak lekérdezése azonosító alapján (tételekkel, fizetésekkel, ÁFA összesítéssel)")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Nyugta sikeresen lekérdezve", content = @Content(schema = @Schema(implementation = ReceiptEntity.class))),
+            @ApiResponse(responseCode = "200", description = "Nyugta sikeresen lekérdezve",
+                content = @Content(
+                    schema = @Schema(implementation = ReceiptEntity.class),
+                    examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                        name = "Sikeres válasz",
+                        value = SwaggerExamples.RECEIPT_RESPONSE_SUCCESS
+                    )
+                )),
             @ApiResponse(responseCode = "404", description = "Nyugta nem található", content = @Content(schema = @Schema(implementation = NotFoundErrorResponse.class)))
     })
     public ResponseEntity<?> getReceiptById(
